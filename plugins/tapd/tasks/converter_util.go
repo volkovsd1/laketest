@@ -2,24 +2,21 @@ package tasks
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/merico-dev/lake/models/domainlayer/didgen"
 	"github.com/merico-dev/lake/models/domainlayer/ticket"
 	"github.com/merico-dev/lake/plugins/core"
-	"github.com/merico-dev/lake/plugins/jira/models"
+	"github.com/merico-dev/lake/plugins/tapd/models"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
 type SprintIssuesConverter struct {
 	db             *gorm.DB
+	data           *TapdTaskData
 	logger         core.Logger
 	sprintIdGen    *didgen.DomainIdGenerator
-	issueIdGen     *didgen.DomainIdGenerator
-	userIdGen      *didgen.DomainIdGenerator
 	sprints        map[string]*ticket.Sprint
 	sprintIssue    map[string]*ticket.SprintIssue
 	status         map[string]*ticket.IssueStatusHistory
@@ -27,13 +24,12 @@ type SprintIssuesConverter struct {
 	sprintsHistory map[string]*ticket.IssueSprintsHistory
 }
 
-func NewSprintIssueConverter(taskCtx core.SubTaskContext) *SprintIssuesConverter {
+func NewChangelogToHistoryConverter(taskCtx core.SubTaskContext) *SprintIssuesConverter {
 	return &SprintIssuesConverter{
 		db:             taskCtx.GetDb(),
 		logger:         taskCtx.GetLogger(),
-		sprintIdGen:    didgen.NewDomainIdGenerator(&models.JiraSprint{}),
-		issueIdGen:     didgen.NewDomainIdGenerator(&models.JiraIssue{}),
-		userIdGen:      didgen.NewDomainIdGenerator(&models.JiraUser{}),
+		data:           taskCtx.GetData().(*TapdTaskData),
+		sprintIdGen:    didgen.NewDomainIdGenerator(&models.TapdIteration{}),
 		sprints:        make(map[string]*ticket.Sprint),
 		sprintIssue:    make(map[string]*ticket.SprintIssue),
 		status:         make(map[string]*ticket.IssueStatusHistory),
@@ -42,46 +38,38 @@ func NewSprintIssueConverter(taskCtx core.SubTaskContext) *SprintIssuesConverter
 	}
 }
 
-func (c *SprintIssuesConverter) FeedIn(sourceId uint64, cl ChangelogItemResult) {
-	if cl.Field == "status" {
+func (c *SprintIssuesConverter) FeedIn(sourceId uint64, cl models.ChangelogTmp) {
+	switch cl.FieldName {
+	case "status":
 		err := c.handleStatus(sourceId, cl)
 		if err != nil {
 			return
 		}
-	}
-	if cl.Field == "assignee" {
+	case "current_owner":
 		err := c.handleAssignee(sourceId, cl)
 		if err != nil {
 			return
 		}
-	}
-	if cl.Field != "Sprint" {
-		return
-	}
-	from, to, err := c.parseFromTo(cl.From, cl.To)
-	if err != nil {
-		return
-	}
-	for sprintId := range from {
-		err = c.handleFrom(sourceId, sprintId, cl)
+	case "iteration_id":
+		err := c.handleFrom(sourceId, cl.IterationIdFrom, cl)
 		if err != nil {
 			c.logger.Error("handle from error:", err)
 			return
 		}
-	}
-	for sprintId := range to {
-		err = c.handleTo(sourceId, sprintId, cl)
+		err = c.handleTo(sourceId, cl.IterationIdTo, cl)
 		if err != nil {
 			c.logger.Error("handle to error:", err)
 			return
 		}
+	default:
+		return
 	}
 }
 
 func (c *SprintIssuesConverter) UpdateSprintIssue() error {
 	var err error
 	for _, fresh := range c.sprintIssue {
-		err = c.db.Updates(fresh).Error
+		err = c.db.Clauses(clause.OnConflict{UpdateAll: true}).Create(fresh).Error
 		if err != nil {
 			return err
 		}
@@ -89,69 +77,29 @@ func (c *SprintIssuesConverter) UpdateSprintIssue() error {
 	return nil
 }
 
-func (c *SprintIssuesConverter) parseFromTo(from, to string) (map[uint64]struct{}, map[uint64]struct{}, error) {
-	fromInts := make(map[uint64]struct{})
-	toInts := make(map[uint64]struct{})
-	var n uint64
-	var err error
-	for _, item := range strings.Split(from, ",") {
-		s := strings.TrimSpace(item)
-		if s == "" {
-			continue
-		}
-		n, err = strconv.ParseUint(s, 10, 64)
-		if err != nil {
-			return nil, nil, err
-		}
-		fromInts[n] = struct{}{}
-	}
-	for _, item := range strings.Split(to, ",") {
-		s := strings.TrimSpace(item)
-		if s == "" {
-			continue
-		}
-		n, err = strconv.ParseUint(s, 10, 64)
-		if err != nil {
-			return nil, nil, err
-		}
-		toInts[n] = struct{}{}
-	}
-	inter := make(map[uint64]struct{})
-	for k := range fromInts {
-		if _, ok := toInts[k]; ok {
-			inter[k] = struct{}{}
-			delete(toInts, k)
-		}
-	}
-	for k := range inter {
-		delete(fromInts, k)
-	}
-	return fromInts, toInts, nil
-}
-
-func (c *SprintIssuesConverter) handleFrom(sourceId, sprintId uint64, cl ChangelogItemResult) error {
+func (c *SprintIssuesConverter) handleFrom(sourceId, sprintId uint64, cl models.ChangelogTmp) error {
 	domainSprintId := c.sprintIdGen.Generate(sourceId, sprintId)
 	if sprint, _ := c.getSprint(domainSprintId); sprint == nil {
 		return nil
 	}
 	key := fmt.Sprintf("%d:%d:%d", sourceId, sprintId, cl.IssueId)
 	if item, ok := c.sprintIssue[key]; ok {
-		if item != nil && (item.RemovedDate == nil || item.RemovedDate != nil && item.RemovedDate.Before(cl.Created)) {
-			item.RemovedDate = &cl.Created
+		if item != nil && (item.RemovedDate == nil || item.RemovedDate != nil && item.RemovedDate.Before(cl.CreatedDate)) {
+			item.RemovedDate = &cl.CreatedDate
 			item.IsRemoved = true
 		}
 	} else {
 		c.sprintIssue[key] = &ticket.SprintIssue{
 			SprintId:    domainSprintId,
-			IssueId:     c.issueIdGen.Generate(sourceId, cl.IssueId),
+			IssueId:     IssueIdGen.Generate(sourceId, cl.IssueId),
 			AddedDate:   nil,
-			RemovedDate: &cl.Created,
+			RemovedDate: &cl.CreatedDate,
 			IsRemoved:   true,
 		}
 	}
 	k := fmt.Sprintf("%d:%d", sprintId, cl.IssueId)
 	if item := c.sprintsHistory[k]; item != nil {
-		item.EndDate = &cl.Created
+		item.EndDate = &cl.CreatedDate
 		err := c.db.Clauses(clause.OnConflict{
 			UpdateAll: true,
 		}).Create(item).Error
@@ -162,13 +110,13 @@ func (c *SprintIssuesConverter) handleFrom(sourceId, sprintId uint64, cl Changel
 	return nil
 }
 
-func (c *SprintIssuesConverter) handleTo(sourceId, sprintId uint64, cl ChangelogItemResult) error {
+func (c *SprintIssuesConverter) handleTo(sourceId, sprintId uint64, cl models.ChangelogTmp) error {
 	domainSprintId := c.sprintIdGen.Generate(sourceId, sprintId)
 	if sprint, _ := c.getSprint(domainSprintId); sprint == nil {
 		return nil
 	}
 	key := fmt.Sprintf("%d:%d:%d", sourceId, sprintId, cl.IssueId)
-	addedStage, err := c.getStage(cl.Created, domainSprintId)
+	addedStage, err := c.getStage(cl.CreatedDate, domainSprintId)
 	if err == gorm.ErrRecordNotFound {
 		return nil
 	}
@@ -179,16 +127,16 @@ func (c *SprintIssuesConverter) handleTo(sourceId, sprintId uint64, cl Changelog
 		return nil
 	}
 	if item, ok := c.sprintIssue[key]; ok {
-		if item != nil && (item.AddedDate == nil || item.AddedDate != nil && item.AddedDate.After(cl.Created)) {
-			item.AddedDate = &cl.Created
+		if item != nil && (item.AddedDate == nil || item.AddedDate != nil && item.AddedDate.After(cl.CreatedDate)) {
+			item.AddedDate = &cl.CreatedDate
 			item.AddedStage = addedStage
 		}
 	} else {
-		addedStage, _ := c.getStage(cl.Created, domainSprintId)
+		addedStage, _ := c.getStage(cl.CreatedDate, domainSprintId)
 		c.sprintIssue[key] = &ticket.SprintIssue{
 			SprintId:    domainSprintId,
-			IssueId:     c.issueIdGen.Generate(sourceId, cl.IssueId),
-			AddedDate:   &cl.Created,
+			IssueId:     IssueIdGen.Generate(sourceId, cl.IssueId),
+			AddedDate:   &cl.CreatedDate,
 			AddedStage:  addedStage,
 			RemovedDate: nil,
 		}
@@ -196,9 +144,9 @@ func (c *SprintIssuesConverter) handleTo(sourceId, sprintId uint64, cl Changelog
 	k := fmt.Sprintf("%d:%d", sprintId, cl.IssueId)
 	now := time.Now()
 	c.sprintsHistory[k] = &ticket.IssueSprintsHistory{
-		IssueId:   c.issueIdGen.Generate(sourceId, cl.IssueId),
+		IssueId:   IssueIdGen.Generate(sourceId, cl.IssueId),
 		SprintId:  domainSprintId,
-		StartDate: cl.Created,
+		StartDate: cl.CreatedDate,
 		EndDate:   &now,
 	}
 	return nil
@@ -224,11 +172,11 @@ func (c *SprintIssuesConverter) getStage(t time.Time, sprintId string) (*string,
 	return getStage(t, sprint.StartedDate, sprint.CompletedDate), nil
 }
 
-func (c *SprintIssuesConverter) handleStatus(sourceId uint64, cl ChangelogItemResult) error {
+func (c *SprintIssuesConverter) handleStatus(sourceId uint64, cl models.ChangelogTmp) error {
 	var err error
-	issueId := c.issueIdGen.Generate(sourceId, cl.IssueId)
+	issueId := IssueIdGen.Generate(sourceId, cl.IssueId)
 	if statusHistory := c.status[issueId]; statusHistory != nil {
-		statusHistory.EndDate = &cl.Created
+		statusHistory.EndDate = &cl.CreatedDate
 		err = c.db.Clauses(clause.OnConflict{
 			UpdateAll: true,
 		}).Create(c.status[issueId]).Error
@@ -239,8 +187,8 @@ func (c *SprintIssuesConverter) handleStatus(sourceId uint64, cl ChangelogItemRe
 	now := time.Now()
 	c.status[issueId] = &ticket.IssueStatusHistory{
 		IssueId:        issueId,
-		OriginalStatus: cl.ToString,
-		StartDate:      cl.Created,
+		OriginalStatus: cl.From,
+		StartDate:      cl.CreatedDate,
 		EndDate:        &now,
 	}
 	err = c.db.Clauses(clause.OnConflict{
@@ -252,20 +200,20 @@ func (c *SprintIssuesConverter) handleStatus(sourceId uint64, cl ChangelogItemRe
 	return nil
 }
 
-func (c *SprintIssuesConverter) handleAssignee(sourceId uint64, cl ChangelogItemResult) error {
-	issueId := c.issueIdGen.Generate(sourceId, cl.IssueId)
+func (c *SprintIssuesConverter) handleAssignee(sourceId uint64, cl models.ChangelogTmp) error {
+	issueId := IssueIdGen.Generate(sourceId, cl.IssueId)
 	if assigneeHistory := c.assignee[issueId]; assigneeHistory != nil {
-		assigneeHistory.EndDate = &cl.Created
+		assigneeHistory.EndDate = &cl.CreatedDate
 	}
 	var assignee string
 	if cl.To != "" {
-		assignee = c.userIdGen.Generate(sourceId, cl.To)
+		assignee = UserIdGen.Generate(sourceId, c.data.Options.WorkspaceId, cl.To)
 	}
 	now := time.Now()
 	c.assignee[issueId] = &ticket.IssueAssigneeHistory{
 		IssueId:   issueId,
 		Assignee:  assignee,
-		StartDate: cl.Created,
+		StartDate: cl.CreatedDate,
 		EndDate:   &now,
 	}
 	err := c.db.Clauses(clause.OnConflict{

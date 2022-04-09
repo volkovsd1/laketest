@@ -45,7 +45,7 @@ func ConvertBug(taskCtx core.SubTaskContext) error {
 				Summary:        toolL.Title,
 				EpicKey:        toolL.EpicKey,
 				Type:           "BUG",
-				Status:         toolL.Status,
+				Status:         toolL.StdStatus,
 				ResolutionDate: toolL.Resolved,
 				CreatedDate:    toolL.Created,
 				UpdatedDate:    toolL.Modified,
@@ -60,9 +60,13 @@ func ConvertBug(taskCtx core.SubTaskContext) error {
 			if domainL.ResolutionDate != nil && domainL.CreatedDate != nil {
 				domainL.LeadTimeMinutes = uint(int64(domainL.ResolutionDate.Minute() - domainL.CreatedDate.Minute()))
 			}
-			return []interface{}{
-				domainL,
-			}, nil
+			results := make([]interface{}, 0, 2)
+			boardIssue := &ticket.BoardIssue{
+				BoardId: WorkspaceIdGen.Generate(data.Options.WorkspaceId),
+				IssueId: domainL.Id,
+			}
+			results = append(results, domainL, boardIssue)
+			return results, nil
 		},
 	})
 	if err != nil {

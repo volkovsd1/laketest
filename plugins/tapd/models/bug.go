@@ -70,6 +70,9 @@ type TapdBug struct {
 	AssignedTime     *time.Time `json:"assigned_time"`
 	TemplateID       uint64     `json:"template_id"`
 	StoryID          uint64     `json:"story_id"`
+	StdStatus        string
+	StdType          string
+	Type             string
 	Url              string
 }
 

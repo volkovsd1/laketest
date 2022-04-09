@@ -28,6 +28,8 @@ func (plugin Tapd) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) er
 		&models.TapdSource{},
 		&models.TapdWorkspace{},
 		&models.TapdUser{},
+		&models.TapdIssueTypeMapping{},
+		&models.TapdIssueStatusMapping{},
 		&models.TapdIteration{},
 		&models.TapdStory{},
 		&models.TapdBug{},
@@ -88,9 +90,9 @@ func (plugin Tapd) SubTaskMetas() []core.SubTaskMeta {
 		tasks.CollectTaskIssueCommitMeta,
 		tasks.ExtractIssueCommitMeta,
 		tasks.ConvertIssueCommitMeta,
-		tasks.ConvertIssueSprintsHistoryMeta,
-		tasks.ConvertIssueStatusHistoryMeta,
-		tasks.ConvertIssueAssigneeHistoryMeta,
+		//tasks.ConvertIssueSprintsHistoryMeta,
+		//tasks.ConvertIssueStatusHistoryMeta,
+		//tasks.ConvertIssueAssigneeHistoryMeta,
 	}
 }
 
@@ -149,6 +151,31 @@ func (plugin Tapd) ApiResources() map[string]map[string]core.ApiResourceHandler 
 			"PUT":    api.PutSource,
 			"DELETE": api.DeleteSource,
 			"GET":    api.GetSource,
+		},
+		"sources/:sourceId/epics": {
+			"GET": api.GetEpicsBySourceId,
+		},
+		"sources/:sourceId/granularities": {
+			"GET": api.GetGranularitiesBySourceId,
+		},
+		"sources/:sourceId/boards": {
+			"GET": api.GetBoardsBySourceId,
+		},
+		"sources/:sourceId/type-mappings": {
+			"POST": api.PostIssueTypeMappings,
+			"GET":  api.ListIssueTypeMappings,
+		},
+		"sources/:sourceId/type-mappings/:userType": {
+			"PUT":    api.PutIssueTypeMapping,
+			"DELETE": api.DeleteIssueTypeMapping,
+		},
+		"sources/:sourceId/type-mappings/:userType/status-mappings": {
+			"POST": api.PostIssueStatusMappings,
+			"GET":  api.ListIssueStatusMappings,
+		},
+		"sources/:sourceId/type-mappings/:userType/status-mappings/:userStatus": {
+			"PUT":    api.PutIssueStatusMapping,
+			"DELETE": api.DeleteIssueStatusMapping,
 		},
 	}
 }

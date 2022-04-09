@@ -46,6 +46,8 @@ type TapdStory struct {
 	TemplatedID     uint64     `json:"templated_id"`
 	CreatedFrom     string     `json:"created_from"`
 	Feature         string     `json:"feature"`
+	StdStatus       string
+	StdType         string
 	Url             string
 	common.NoPKModel
 }

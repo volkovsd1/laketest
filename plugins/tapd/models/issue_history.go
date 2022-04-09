@@ -31,9 +31,9 @@ type TapdIssueSprintsHistory struct {
 	common.NoPKModel
 	SourceId    uint64 `gorm:"primaryKey"`
 	WorkspaceId uint64
-
-	IssueId   uint64    `gorm:"primaryKey"`
-	SprintId  uint64    `gorm:"primaryKey"`
-	StartDate time.Time `gorm:"primaryKey"`
-	EndDate   time.Time
+	ChangelogId uint64
+	IssueId     uint64    `gorm:"primaryKey"`
+	SprintId    uint64    `gorm:"primaryKey"`
+	StartDate   time.Time `gorm:"primaryKey"`
+	EndDate     time.Time
 }

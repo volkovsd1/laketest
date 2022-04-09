@@ -59,7 +59,7 @@ func ExtractBugChangelog(taskCtx core.SubTaskContext) error {
 			}
 			results := make([]interface{}, 0, 2)
 
-			bugChangelogItem := &models.TapdChangelogItem{
+			item := &models.TapdChangelogItem{
 				SourceId:          data.Source.ID,
 				ChangelogId:       v.ID,
 				Field:             v.Field,
@@ -67,8 +67,13 @@ func ExtractBugChangelog(taskCtx core.SubTaskContext) error {
 				ValueAfterParsed:  v.NewValue,
 				NoPKModel:         common.NoPKModel{},
 			}
-
-			results = append(results, toolL, bugChangelogItem)
+			if item.Field == "iteration_id" {
+				item, err = parseIterationChangelog(taskCtx, item)
+				if err != nil {
+					return nil, err
+				}
+			}
+			results = append(results, toolL, item)
 			return results, nil
 		},
 	})

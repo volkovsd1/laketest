@@ -27,9 +27,12 @@ type TapdTask struct {
 	EffortCompleted uint64     `json:"effort_completed"`
 	Exceed          uint64     `json:"exceed"`
 	Remain          uint64     `json:"remain"`
-	StoryID         uint64     `json:"story_id"`
-	Progress        int        `json:"progress"`
-	HasAttachment   string     `json:"has_attachment"`
+	StdStatus       string
+	StdType         string
+	Type            string
+	StoryID         uint64 `json:"story_id"`
+	Progress        int    `json:"progress"`
+	HasAttachment   string `json:"has_attachment"`
 	Url             string
 	common.NoPKModel
 }
