@@ -8,6 +8,7 @@ import (
 	"github.com/robfig/cron/v3"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
+	"time"
 )
 
 var cfg *viper.Viper
@@ -18,7 +19,8 @@ func init() {
 	var err error
 	cfg = config.GetConfig()
 	db, err = runner.NewGormDb(cfg, logger.Global.Nested("db"))
-	cronManager = cron.New()
+	location := cron.WithLocation(time.UTC)
+	cronManager = cron.New(location)
 	if err != nil {
 		panic(err)
 	}
