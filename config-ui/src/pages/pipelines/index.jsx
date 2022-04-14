@@ -80,13 +80,13 @@ const Pipelines = (props) => {
   const nextPage = () => {
     currentPage.current = Math.min(maxPage, currentPage.current + 1)
     setRefresh(r => !r)
-    console.log('>>>> NEXT PAGE', currentPage.current)
+    
   }
 
   const prevPage = () => {
     currentPage.current = Math.max(1, currentPage.current - 1)
     setRefresh(r => !r)
-    console.log('>>>> PREV PAGE', currentPage.current)
+    
   }
 
   const resetPage = () => {
@@ -94,7 +94,7 @@ const Pipelines = (props) => {
   }
 
   const filterPipelines = useCallback((status) => {
-    console.log('>>> GOT PIPELINE COUNT = ', pipelines.length, pipelines.length / perPage)
+    
     resetPage()
     setFilteredPipelines(status === 'all' ? pipelines : pipelines.filter((p) => p.status === status))
     // setMaxPage(pipelines.length <= perPage ? 1 : Math.floor(pipelines.length / perPage))
@@ -111,9 +111,9 @@ const Pipelines = (props) => {
     const sliceEnd = currentPage.current === 1
       ? perPage
       : ((currentPage.current + sliceOffset) * perPage) + perPage
-    console.log('>> CURRENT PAGE = ', currentPage.current)
-    console.log('>> START RECORD INDEX ====', sliceBegin)
-    console.log('>> END RECORD INDEX ====', sliceEnd)
+    
+    
+    
     setPagedPipelines(filteredPipelines.slice(sliceBegin, sliceEnd))
   }, [filteredPipelines, perPage])
 
@@ -135,7 +135,7 @@ const Pipelines = (props) => {
         pipelineCol: t.pipelineCol
       }
     })
-    console.log('>>> RESTARTING PIPELINE WITH EXISTING CONFIGURATION!!', existingTasksConfiguration)
+    
     history.push({
       pathname: '/pipelines/create',
       state: {
@@ -152,9 +152,9 @@ const Pipelines = (props) => {
   }, [fetchAllPipelines])
 
   useEffect(() => {
-    console.log('>>> Pipelines', filteredPipelines)
-    console.log('>> CURRENT PAGE = ', currentPage.current)
-    console.log('>> MAX PAGE = ', maxPage)
+    
+    
+    
     if (pipelines.length > 0) {
       const latestPipelineRun = pipelines[0]
       fetchPipeline(latestPipelineRun.ID)
@@ -166,13 +166,13 @@ const Pipelines = (props) => {
   }, [pipelineCount])
 
   useEffect(() => {
-    console.log('>> FILTER STATUS CHANGED ===> ', activeStatus)
+    
     setIsProcessing(true)
     filterPipelines(activeStatus)
   }, [activeStatus, filterPipelines])
 
   useEffect(() => {
-    console.log('>> PAGINATING PIPELINES...')
+    
     paginatePipelines()
   }, [refresh, perPage, filteredPipelines, paginatePipelines])
 
@@ -181,13 +181,13 @@ const Pipelines = (props) => {
   // }, [latestPipeline])
 
   useEffect(() => {
-    console.log('>>> FILTERED PIPELINES!', filteredPipelines)
+    
     setMaxPage(filteredPipelines.length <= perPage ? 1 : Math.ceil(filteredPipelines.length / perPage))
     // @todo: JC -- check if pagination call is needed here!
   }, [filteredPipelines, perPage])
 
   useEffect(() => {
-    console.log('>>> PAGED PIPELINES...', pagedPipelines)
+    
   }, [pagedPipelines])
 
   return (

@@ -26,16 +26,16 @@ function usePipelineManager (pipelineName = `COLLECTION ${Date.now()}`, initialT
   const [pipelineRun, setPipelineRun] = useState(NullPipelineRun)
 
   const runPipeline = useCallback(() => {
-    console.log('>> RUNNING PIPELINE....')
+    
     try {
       setIsRunning(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> DISPATCHING PIPELINE REQUEST', settings)
+      
       const run = async () => {
         const p = await request.post(`${DEVLAKE_ENDPOINT}/pipelines`, settings)
         const t = await request.get(`${DEVLAKE_ENDPOINT}/pipelines/${p.data?.ID || p.data?.id}/tasks`)
-        console.log('>> RAW PIPELINE DATA FROM API...', p.data)
+        
         setPipelineRun({ ...p.data, ID: p.data?.ID || p.data?.id, tasks: [...t.data.tasks] })
         setLastRunId(p.data?.ID || p.data?.id)
         ToastNotification.show({ message: `Created New Pipeline - ${pipelineName}.`, intent: 'danger', icon: 'small-tick' })
@@ -56,10 +56,10 @@ function usePipelineManager (pipelineName = `COLLECTION ${Date.now()}`, initialT
       setIsCancelling(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> DISPATCHING CANCEL PIPELINE REQUEST, RUN ID =', pipelineID)
+      
       const cancel = async () => {
         const c = await request.delete(`${DEVLAKE_ENDPOINT}/pipelines/${pipelineID}`)
-        console.log('>> RAW PIPELINE CANCEL RUN RESPONSE FROM API...', c)
+        
         setPipelineRun(NullPipelineRun)
         ToastNotification.show({ message: `Pipeline RUN ID - ${pipelineID} Cancelled`, intent: 'danger', icon: 'small-tick' })
         setTimeout(() => {
@@ -76,19 +76,19 @@ function usePipelineManager (pipelineName = `COLLECTION ${Date.now()}`, initialT
 
   const fetchPipeline = useCallback((pipelineID, refresh = false) => {
     if (!pipelineID) {
-      console.log('>> !ABORT! Pipeline ID Missing! Aborting Fetch...')
+      
       // return ToastNotification.show({ message: 'Pipeline ID Missing! Aborting Fetch...', intent: 'danger', icon: 'warning-sign' })
     }
     try {
       setIsFetching(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> FETCHING PIPELINE RUN DETAILS...')
+      
       const fetch = async () => {
         const p = await request.get(`${DEVLAKE_ENDPOINT}/pipelines/${pipelineID}`)
         const t = await request.get(`${DEVLAKE_ENDPOINT}/pipelines/${pipelineID}/tasks`)
-        console.log('>> RAW PIPELINE RUN DATA FROM API...', p.data)
-        console.log('>> RAW PIPELINE TASKS DATA FROM API...', t.data)
+        
+        
         setActivePipeline({
           ...p.data,
           ID: p.data.ID || p.data.id,
@@ -127,10 +127,10 @@ function usePipelineManager (pipelineName = `COLLECTION ${Date.now()}`, initialT
       setIsFetchingAll(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> FETCHING ALL PIPELINE RUNS...')
+      
       const fetchAll = async () => {
         const p = await request.get(`${DEVLAKE_ENDPOINT}/pipelines`)
-        console.log('>> RAW PIPELINES RUN DATA FROM API...', p.data?.pipelines)
+        
         let pipelines = p.data && p.data.pipelines ? [...p.data.pipelines] : []
         pipelines = pipelines.map(p => ({ ...p, ID: p.ID || p.id }))
         setPipelines(pipelines)
@@ -161,12 +161,12 @@ function usePipelineManager (pipelineName = `COLLECTION ${Date.now()}`, initialT
     })
     const stageKeys = Object.keys(stages)
     stagesArray = Object.values(stages)
-    console.log('>>> BUILDING PIPELINE STAGES...', tasks, stages, stagesArray)
+    
     return outputArray ? stagesArray : stages
   }, [])
 
   useEffect(() => {
-    console.log('>> PIPELINE MANAGER - RECEIVED RUN/TASK SETTINGS', settings)
+    
   }, [settings])
 
   useEffect(() => {

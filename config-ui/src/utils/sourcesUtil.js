@@ -17,7 +17,7 @@ const SourcesUtil = {
       }
     }
     if (errors.length > 0) {
-      console.log('errors', errors)
+      
     }
     return pluginsToSet
   }

@@ -78,9 +78,9 @@ function useConnectionManager ({
       }
       connectionPayload = { ...connectionPayload, ...manualPayload }
       const testUrl = `${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/test`
-      console.log('INFO >>> Endopoint URL & Payload for testing: ', testUrl, connectionPayload)
+      
       const res = await request.post(testUrl, connectionPayload)
-      console.log('res.data', res.data)
+      
       if (res.data?.success && res.status === 200) {
         setIsTesting(false)
         setTestStatus(1)
@@ -134,7 +134,7 @@ function useConnectionManager ({
         setErrors([])
         ToastNotification.clear()
         const s = await request.post(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources`, configPayload)
-        console.log('>> CONFIGURATION SAVED SUCCESSFULLY', configPayload, s)
+        
         saveResponse = {
           ...saveResponse,
           success: [200, 201].includes(s.status),
@@ -154,7 +154,7 @@ function useConnectionManager ({
         setErrors([])
         ToastNotification.clear()
         const s = await request.put(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources/${activeConnection.ID}`, configPayload)
-        console.log('>> CONFIGURATION MODIFIED SUCCESSFULLY', configPayload, s)
+        
         saveResponse = {
           ...saveResponse,
           success: [200, 201].includes(s.status),
@@ -195,22 +195,22 @@ function useConnectionManager ({
   const runCollection = (options = {}) => {
     setIsRunning(true)
     ToastNotification.show({ message: 'Triggered Collection Process', intent: 'info', icon: 'info' })
-    console.log('>> RUNNING COLLECTION PROCESS', isRunning)
+    
     // Run Collection Tasks...
   }
 
   // const fetchConnection = async () => {
   const fetchConnection = useCallback(() => {
-    console.log('>> FETCHING CONNECTION....')
+    
     try {
       setIsFetching(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> FETCHING CONNECTION SOURCE')
+      
       const fetch = async () => {
         const f = await request.get(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources/${connectionId}`)
         const connectionData = f.data
-        console.log('>> RAW CONNECTION DATA FROM API...', connectionData)
+        
         setActiveConnection({
           ...connectionData,
           ID: connectionData.ID || connectionData.id,
@@ -240,9 +240,9 @@ function useConnectionManager ({
       setIsFetching(true)
       setErrors([])
       ToastNotification.clear()
-      console.log('>> FETCHING ALL CONNECTION SOURCES')
+      
       const f = await request.get(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources`)
-      console.log('>> RAW ALL CONNECTIONS DATA FROM API...', f.data)
+      
       const providerConnections = [].concat(Array.isArray(f.data) ? f.data : []).map((conn, idx) => {
         return {
           ...conn,
@@ -276,9 +276,9 @@ function useConnectionManager ({
     try {
       setIsDeleting(true)
       setErrors([])
-      console.log('>> TRYING TO DELETE CONNECTION...', connection)
+      
       const d = await request.delete(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources/${connection.ID}`)
-      console.log('>> CONNECTION DELETED...', d)
+      
       setIsDeleting(false)
       setDeleteComplete({
         provider: activeProvider,
@@ -298,9 +298,9 @@ function useConnectionManager ({
   }, [])
 
   const testAllConnections = useCallback((connections) => {
-    console.log('>> TESTING ALL CONNECTION SOURCES...')
+    
     connections.forEach((c, cIdx) => {
-      console.log('>>> TESTING CONNECTION INSTANCE...', c)
+      
       const notify = false
       const payload = {
         endpoint: c.Endpoint || c.endpoint,
@@ -343,13 +343,13 @@ function useConnectionManager ({
       }
       ToastNotification.clear()
       ToastNotification.show({ message: `Fetched settings for ${activeConnection.name}.`, intent: 'success', icon: 'small-tick' })
-      console.log('>> FETCHED CONNECTION FOR MODIFY', activeConnection)
+      
     }
   }, [activeConnection, activeProvider.id])
 
   useEffect(() => {
     if (saveComplete && saveComplete.ID) {
-      console.log('>>> CONNECTION MANAGER - SAVE COMPLETE EFFECT RUNNING...')
+      
       setActiveConnection((ac) => {
         return {
           ...ac,
@@ -360,7 +360,7 @@ function useConnectionManager ({
   }, [saveComplete])
 
   useEffect(() => {
-    console.log('>> CONNECTION MANAGER - RECEIVED ACTIVE PROVIDER...', activeProvider)
+    
     if (activeProvider && activeProvider.id) {
       // console.log(activeProvider)
     }
@@ -368,13 +368,13 @@ function useConnectionManager ({
 
   useEffect(() => {
     if (connectionId) {
-      console.log('>>>> CONFIGURING CONNECTION ID ... ', connectionId)
+      
       fetchConnection()
     }
   }, [connectionId, fetchConnection])
 
   useEffect(() => {
-    console.log('>> TESTED CONNECTION RESULTS...', testedConnections)
+    
   }, [testedConnections])
 
   return {

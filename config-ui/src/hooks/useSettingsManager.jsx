@@ -40,7 +40,7 @@ function useSettingsManager ({
         setShowError(false)
         ToastNotification.clear()
         const s = await request.put(`${DEVLAKE_ENDPOINT}/plugins/${activeProvider.id}/sources/${activeConnection.ID}`, settingsPayload)
-        console.log('>> SETTINGS SAVED SUCCESSFULLY', settingsPayload, s)
+        
         saveResponse = {
           ...saveResponse,
           success: [200, 201].includes(s.status),

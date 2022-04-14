@@ -21,7 +21,7 @@ const useJIRA = ({ apiProxyPath, issuesEndpoint, fieldsEndpoint }) => {
         request
           .get(issuesEndpoint)
           .catch(e => setError(e))
-        console.log('>>> JIRA API PROXY: Issues Response...', issues)
+        
         setIssueTypesResponse(issues && Array.isArray(issues.data) ? issues.data : [])
         setTimeout(() => {
           setIsFetching(false)
@@ -46,7 +46,7 @@ const useJIRA = ({ apiProxyPath, issuesEndpoint, fieldsEndpoint }) => {
         request
           .get(fieldsEndpoint)
           .catch(e => setError(e))
-        console.log('>>> JIRA API PROXY: Fields Response...', fields)
+        
         setFieldsResponse(fields && Array.isArray(fields.data) ? fields.data : [])
         setTimeout(() => {
           setIsFetching(false)
@@ -82,12 +82,12 @@ const useJIRA = ({ apiProxyPath, issuesEndpoint, fieldsEndpoint }) => {
   }, [fieldsResponse])
 
   useEffect(() => {
-    console.log('>>> JIRA API PROXY: FIELD SELECTOR LIST DATA', fields)
+    
   }, [fields])
 
   useEffect(() => {
     if (error) {
-      console.log('>>> JIRA PROXY API ERROR!', error)
+      
     }
   }, [error])
 

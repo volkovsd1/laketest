@@ -25,16 +25,9 @@ function useConnectionValidation ({
 
   const validate = useCallback(() => {
     const errs = []
-    console.log('>> VALIDATING PROVIDER ID: ', activeProvider.id)
-    console.log('>> RUNNING FORM VALIDATIONS AGAINST FIELD VALUES...')
-    console.log(
-      'NAME', name,
-      'ENDPOINT URL', endpointUrl,
-      'PROXY URL', proxy,
-      'TOKEN', token,
-      'USERNAME', username,
-      'PASSWORD', password
-    )
+    
+    
+    
 
     if (!name) {
       errs.push('Connection Source name is required')
@@ -91,7 +84,7 @@ function useConnectionValidation ({
   ])
 
   useEffect(() => {
-    console.log('>>> CONNECTION FORM ERRORS...', errors)
+    
     setIsValid(errors.length === 0)
     if (errors.length > 0) {
       // ToastNotification.clear()

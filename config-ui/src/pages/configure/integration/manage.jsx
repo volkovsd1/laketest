@@ -62,7 +62,7 @@ export default function ManageIntegration () {
   }
 
   const editConnection = (connection, e) => {
-    console.log(e.target.classList)
+    
     if (e.target && (!e.target.classList.contains('cell-actions') || !e.target.classList.contains('actions-link'))) {
       history.push(`/connections/edit/${activeProvider.id}/${connection.id}`)
     }
@@ -71,7 +71,7 @@ export default function ManageIntegration () {
   const configureConnection = (connection) => {
     const { id, endpoint } = connection
     history.push(`/connections/configure/${activeProvider.id}/${id}`)
-    console.log('>> editing/modifying connection: ', id, endpoint)
+    
   }
 
   // @todo: Implement
@@ -127,13 +127,13 @@ export default function ManageIntegration () {
   }, [activeProvider, fetchAllConnections])
 
   useEffect(() => {
-    console.log('>> ACTIVE PROVIDER = ', providerId)
+    
     setIntegrations(integrations)
     setActiveProvider(integrations.find(p => p.id === providerId))
   }, [])
 
   useEffect(() => {
-    console.log('>> CONNECTION SOURCE LIMITS', sourceLimits)
+    
   }, [connections, sourceLimits])
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export default function ManageIntegration () {
   }, [deleteComplete, fetchAllConnections])
 
   useEffect(() => {
-    console.log('>> TESTING CONNECTION SOURCES...')
+    
     testAllConnections(connections)
   }, [connections])
 

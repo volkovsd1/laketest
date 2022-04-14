@@ -80,7 +80,7 @@ export default function JiraSettings (props) {
     Object.entries(mappings).forEach(([tag, typeObj]) => {
       GroupedMappings[typeObj.standardType].push(tag)
     })
-    console.log('>>>> PARSED TYPE MAPPINGS ....', GroupedMappings)
+    
     setTypeMappingRequirement(GroupedMappings[MAPPING_TYPES.Requirement])
     setTypeMappingBug(GroupedMappings[MAPPING_TYPES.Bug])
     setTypeMappingIncident(GroupedMappings[MAPPING_TYPES.Incident])
@@ -98,18 +98,8 @@ export default function JiraSettings (props) {
       remotelinkCommitShaPattern: remoteLinkCommitSha || ''
     }
     onSettingsChange(settings)
-    console.log('>> JIRA INSTANCE SETTINGS FIELDS CHANGED!', settings)
-    console.log(
-      typeMappingBug,
-      typeMappingAll,
-      typeMappingIncident,
-      typeMappingRequirement,
-      statusMappings,
-      jiraIssueEpicKeyField,
-      jiraIssueStoryPointField,
-      jiraIssueStoryCoefficient,
-      remoteLinkCommitSha,
-      onSettingsChange)
+    
+    
   }, [
     typeMappingBug,
     typeMappingAll,
@@ -137,14 +127,14 @@ export default function JiraSettings (props) {
       const CombinedMappings = [...RequirementMappings, ...IncidentMappings, ...BugMappings].filter(m => m !== null)
       const MappingTypeObjects = CombinedMappings.reduce((pV, cV) => { return { ...cV, ...pV } }, {})
       setTypeMappingAll(MappingTypeObjects)
-      console.log('>> INCIDENT TYPE MAPPING OBJECTS....', RequirementMappings, IncidentMappings, BugMappings)
-      console.log('>> ALL MAPPINGS COMBINED...', CombinedMappings)
-      console.log('>> FINAL MAPPING OBJECTS FOR API REQUEST...', MappingTypeObjects)
+      
+      
+      
     }
   }, [typeMappingBug, typeMappingIncident, typeMappingRequirement])
 
   useEffect(() => {
-    console.log('>> CONN SETTINGS OBJECT ', connection)
+    
     if (connection && connection.ID) {
       // Parse Type Mappings (V2)
       parseTypeMappings(connection.typeMappings)
@@ -174,12 +164,12 @@ export default function JiraSettings (props) {
   }, [connection.UpdatedAt, fetchIssueTypes, fetchFields])
 
   useEffect(() => {
-    console.log('>>> JIRA SETTINGS :: FIELDS LIST DATA CHANGED!', fields)
+    
     setFieldsList(fields)
   }, [fields])
 
   useEffect(() => {
-    console.log('>>> JIRA SETTINGS :: ISSUE TYPES LIST DATA CHANGED!', issueTypes)
+    
     setIssueTypesList(issueTypes)
     setRequirementTagsList(issueTypes)
     setBugTagsList(issueTypes)

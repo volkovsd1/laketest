@@ -78,7 +78,7 @@ const PipelineActivity = (props) => {
         [tS.pipelineRow]: tasks?.filter(t => t.pipelineRow === tS.pipelineRow)
       }
     })
-    console.log('>>> BUILDING PIPELINE STAGES...', stages)
+    
     return stages
   }, [])
 
@@ -98,7 +98,7 @@ const PipelineActivity = (props) => {
         pipelineCol: t.pipelineCol
       }
     })
-    console.log('>>> RESTARTING PIPELINE WITH EXISTING CONFIGURATION!!', existingTasksConfiguration)
+    
     history.push({
       pathname: '/pipelines/create',
       state: {
@@ -109,7 +109,7 @@ const PipelineActivity = (props) => {
 
   useEffect(() => {
     setPipelineId(pId)
-    console.log('>>> REQUESTED PIPELINE ID ===', pId)
+    
   }, [pId])
 
   useEffect(() => {
@@ -129,12 +129,12 @@ const PipelineActivity = (props) => {
 
   useEffect(() => {
     if (autoRefresh) {
-      console.log('>> ACTIVITY POLLING ENABLED!')
+      
       pollInterval.current = setInterval(() => {
         fetchPipeline(pipelineId)
       }, pollTimer)
     } else {
-      console.log('>> ACTIVITY POLLING DISABLED!')
+      
       clearInterval(pollInterval.current)
     }
   }, [autoRefresh, fetchPipeline, pipelineId, pollTimer])
@@ -150,7 +150,7 @@ const PipelineActivity = (props) => {
   }, [stages])
 
   useEffect(() => {
-    console.log('>>> GOT LAST RUN ID!', lastRunId)
+    
   }, [lastRunId])
 
   return (
