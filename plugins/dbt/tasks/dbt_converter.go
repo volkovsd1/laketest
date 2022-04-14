@@ -59,8 +59,7 @@ func DbtConverter(taskCtx core.SubTaskContext) error {
 		if err != nil {
 			return fmt.Errorf("parameters vars json marshal error")
 		}
-		dbtExecParams = append(dbtExecParams, "--vars")
-		dbtExecParams = append(dbtExecParams, string(jsonProjectVars))
+		dbtExecParams = append(dbtExecParams, "--vars", string(jsonProjectVars))
 	}
 	dbtExecParams = append(dbtExecParams, "--select")
 	dbtExecParams = append(dbtExecParams, models...)

@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"encoding/json"
+
 	"github.com/merico-dev/lake/plugins/core"
 	"github.com/merico-dev/lake/plugins/github/models"
 	"github.com/merico-dev/lake/plugins/helper"
@@ -77,8 +78,7 @@ func ExtractApiCommitStats(taskCtx core.SubTaskContext) error {
 
 			results := make([]interface{}, 0, 2)
 
-			results = append(results, commit)
-			results = append(results, commitStat)
+			results = append(results, commit, commitStat)
 
 			return results, nil
 		},
