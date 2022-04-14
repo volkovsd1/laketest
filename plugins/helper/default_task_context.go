@@ -71,7 +71,7 @@ func (c *defaultExecContext) GetLogger() core.Logger {
 	return c.logger
 }
 
-func (c *defaultExecContext) SetProgress(progressType core.ProgressType, current int, total int) {
+func (c *defaultExecContext) SetProgress(progressType core.ProgressType, current, total int) {
 	c.mu.Lock()
 	c.current = current
 	c.total = total
@@ -125,7 +125,7 @@ type DefaultTaskContext struct {
 	subtaskCtxs map[string]*DefaultSubTaskContext
 }
 
-func (c *DefaultTaskContext) SetProgress(current int, total int) {
+func (c *DefaultTaskContext) SetProgress(current, total int) {
 	c.defaultExecContext.SetProgress(core.TaskSetProgress, current, total)
 	c.logger.Info("total step: %d", c.total)
 }
@@ -141,7 +141,7 @@ type DefaultSubTaskContext struct {
 	taskCtx *DefaultTaskContext
 }
 
-func (c *DefaultSubTaskContext) SetProgress(current int, total int) {
+func (c *DefaultSubTaskContext) SetProgress(current, total int) {
 	c.defaultExecContext.SetProgress(core.SubTaskSetProgress, current, total)
 	if total > -1 {
 		c.logger.Info("total records: %d", c.total)

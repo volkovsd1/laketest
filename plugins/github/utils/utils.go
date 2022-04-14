@@ -22,7 +22,7 @@ type RateLimitInfo struct {
 	Remaining int
 }
 
-func ConvertRateLimitInfo(date string, resetTime string, remaining string) (RateLimitInfo, error) {
+func ConvertRateLimitInfo(date, resetTime, remaining string) (RateLimitInfo, error) {
 	var rateLimitInfo RateLimitInfo
 	var err error
 	if date != "" {

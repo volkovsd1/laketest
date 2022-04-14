@@ -16,7 +16,7 @@ func NewCommitNodeGraph() *CommitNodeGraph {
 }
 
 // AddParent adds node's edge to node.Parent
-func (cng *CommitNodeGraph) AddParent(commit_sha string, commit_parent_sha string) {
+func (cng *CommitNodeGraph) AddParent(commit_sha, commit_parent_sha string) {
 	var commitNow *CommitNode
 	var commitParentNow *CommitNode
 	var ok bool
@@ -37,7 +37,7 @@ func (cng *CommitNodeGraph) AddParent(commit_sha string, commit_parent_sha strin
 }
 
 // CalculateLostSha calculates commit sha which newCommitNode has but oldCommitNode does not have
-func (cng *CommitNodeGraph) CalculateLostSha(source_sha string, target_sha string) ([]string, int, int) {
+func (cng *CommitNodeGraph) CalculateLostSha(source_sha, target_sha string) ([]string, int, int) {
 	var oldCommitNode *CommitNode
 	var newCommitNode *CommitNode
 	var lostSha []string

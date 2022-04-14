@@ -5,6 +5,6 @@ import (
 	"fmt"
 )
 
-func GetEncodedToken(username string, password string) string {
+func GetEncodedToken(username, password string) string {
 	return base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v:%v", username, password)))
 }
