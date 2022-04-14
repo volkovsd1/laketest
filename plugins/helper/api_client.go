@@ -245,7 +245,7 @@ func UnmarshalResponse(res *http.Response, v interface{}) error {
 	return nil
 }
 
-func GetURIStringPointer(baseUrl string, relativePath string, query url.Values) (*string, error) {
+func GetURIStringPointer(baseUrl, relativePath string, query url.Values) (*string, error) {
 	// If the base URL doesn't end with a slash, and has a relative path attached
 	// the values will be removed by the Go package, therefore we need to add a missing slash.
 	AddMissingSlashToURL(&baseUrl)

@@ -26,7 +26,7 @@ func CheckNetwork(host, port string, timeout time.Duration) error {
 	return nil
 }
 
-func ResolvePort(port string, schema string) (string, error) {
+func ResolvePort(port, schema string) (string, error) {
 	var defaultPorts = map[string]string{
 		"http":  "80",
 		"https": "443",

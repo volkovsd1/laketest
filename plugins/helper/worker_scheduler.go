@@ -23,7 +23,7 @@ type WorkerScheduler struct {
 // NewWorkerScheduler Create a parallel scheduler to control the maximum number of runs and the maximum number of runs per second
 // 注意: task执行是无序的
 // Warning: task execution is out of order
-func NewWorkerScheduler(workerNum int, maxWork int, maxWorkDuration time.Duration, ctx context.Context) (*WorkerScheduler, error) {
+func NewWorkerScheduler(workerNum, maxWork int, maxWorkDuration time.Duration, ctx context.Context) (*WorkerScheduler, error) {
 	var waitGroup sync.WaitGroup
 	workerErrors := make([]error, 0)
 	pWorkerErrors := &workerErrors
