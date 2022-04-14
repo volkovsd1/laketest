@@ -210,8 +210,8 @@ export default function Triggers () {
                       <span style={{ float: 'right', fontSize: '9px', color: '#aaaaaa' }}>application/json</span> JSON
                     </h3>
                     <TextArea
-                      growVertically={true}
-                      fill={true}
+                      growVertically
+                      fill
                       className='codeArea'
                       value={textAreaBody}
                       onChange={(e) => setTextAreaBody(e.target.value)}

@@ -71,8 +71,8 @@ const ProviderSettings = (props) => {
                 className='selector-source-id'
                 popoverProps={{ popoverClassName: 'source-id-popover' }}
                 multiple
-                inline={true}
-                fill={true}
+                inline
+                fill
                 items={sources}
                 activeItem={selectedSource}
                 itemPredicate={(query, item) => item?.title?.toLowerCase().indexOf(query.toLowerCase()) >= 0}
@@ -85,7 +85,7 @@ const ProviderSettings = (props) => {
                     text={item.title}
                   />
                 )}
-                noResults={<MenuItem disabled={true} text='No Connections.' />}
+                noResults={<MenuItem disabled text='No Connections.' />}
                 onItemSelect={(item) => {
                   setSelectedSource(item)
                 }}
@@ -134,10 +134,10 @@ const ProviderSettings = (props) => {
                 disabled={isRunning || !isEnabled(providerId)}
                 placeholder='eg. 8, 100, 200'
                 values={boardId || []}
-                fill={true}
+                fill
                 onChange={(values) => setBoardId([...new Set(values)])}
-                addOnPaste={true}
-                addOnBlur={true}
+                addOnPaste
+                addOnBlur
                 rightElement={
                   <Button
                     disabled={isRunning || !isEnabled(providerId)}
@@ -230,10 +230,10 @@ const ProviderSettings = (props) => {
                 disabled={isRunning || !isEnabled(providerId)}
                 placeholder='eg. 937810831, 95781015'
                 values={projectId || []}
-                fill={true}
+                fill
                 onChange={(values) => setProjectId([...new Set(values)])}
-                addOnPaste={true}
-                addOnBlur={true}
+                addOnPaste
+                addOnBlur
                 rightElement={
                   <Button
                     disabled={isRunning || !isEnabled(providerId)}

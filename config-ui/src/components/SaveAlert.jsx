@@ -4,8 +4,8 @@ import { Alert, Intent, TextArea } from '@blueprintjs/core'
 const SaveAlert = ({ alertOpen, onClose }) => {
   return (
     <Alert
-      canEscapeKeyCancel={true}
-      canOutsideClickCancel={true}
+      canEscapeKeyCancel
+      canOutsideClickCancel
       confirmButtonText='Continue'
       isOpen={alertOpen}
       onClose={onClose}

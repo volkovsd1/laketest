@@ -213,12 +213,12 @@ export default function JiraSettings (props) {
         <div className='issue-type-multiselect-selector' style={{ minWidth: '200px', width: '50%' }}>
           <MultiSelect
             disabled={isSaving}
-            resetOnSelect={true}
+            resetOnSelect
             placeholder='< Select one or more Requirement Tags >'
             popoverProps={{ usePortal: false, minimal: true, fill: true, style: { width: '100%' } }}
             className='multiselector-requirement-type'
-            inline={true}
-            fill={true}
+            inline
+            fill
             items={requirementTagsList}
             selectedItems={requirementTags}
             activeItem={null}
@@ -252,7 +252,7 @@ export default function JiraSettings (props) {
                 minimal: true
               },
             }}
-            noResults={<MenuItem disabled={true} text='No results.' />}
+            noResults={<MenuItem disabled text='No results.' />}
             onRemove={(item) => {
               setRequirementTags((rT) => rT.filter(t => t.id !== item.id))
             }}
@@ -280,12 +280,12 @@ export default function JiraSettings (props) {
         <div className='issue-type-multiselect-selector' style={{ minWidth: '200px', width: '50%' }}>
           <MultiSelect
             disabled={isSaving}
-            resetOnSelect={true}
+            resetOnSelect
             placeholder='< Select one or more Bug Tags >'
             popoverProps={{ usePortal: false, minimal: true }}
             className='multiselector-bug-type'
-            inline={true}
-            fill={true}
+            inline
+            fill
             items={bugTagsList}
             selectedItems={bugTags}
             activeItem={null}
@@ -319,7 +319,7 @@ export default function JiraSettings (props) {
                 minimal: true
               },
             }}
-            noResults={<MenuItem disabled={true} text='No results.' />}
+            noResults={<MenuItem disabled text='No results.' />}
             onRemove={(item) => {
               setBugTags((rT) => rT.filter(t => t.id !== item.id))
             }}
@@ -347,12 +347,12 @@ export default function JiraSettings (props) {
         <div className='issue-type-multiselect-selector' style={{ minWidth: '200px', width: '50%' }}>
           <MultiSelect
             disabled={isSaving}
-            resetOnSelect={true}
+            resetOnSelect
             placeholder='< Select one or more Incident Tags >'
             popoverProps={{ usePortal: false, minimal: true }}
             className='multiselector-incident-type'
-            inline={true}
-            fill={true}
+            inline
+            fill
             items={incidentTagsList}
             selectedItems={incidentTags}
             activeItem={null}
@@ -386,7 +386,7 @@ export default function JiraSettings (props) {
                 minimal: true
               },
             }}
-            noResults={<MenuItem disabled={true} text='No results.' />}
+            noResults={<MenuItem disabled text='No results.' />}
             onRemove={(item) => {
               setIncidentTags((rT) => rT.filter(t => t.id !== item.id))
             }}
@@ -413,8 +413,8 @@ export default function JiraSettings (props) {
             <Select
               disabled={isSaving || fieldsList.length === 0}
               className='select-epic-key'
-              inline={true}
-              fill={true}
+              inline
+              fill
               items={fieldsList}
               activeItem={jiraIssueEpicKeyField}
               itemPredicate={(query, item) => item?.title.toLowerCase().indexOf(query.toLowerCase()) >= 0}
@@ -440,7 +440,7 @@ export default function JiraSettings (props) {
                   }}
                 />
               )}
-              noResults={<MenuItem disabled={true} text='No epic results.' />}
+              noResults={<MenuItem disabled text='No epic results.' />}
               onItemSelect={(item) => {
                 setJiraIssueEpicKeyField(item)
               }}
@@ -450,7 +450,7 @@ export default function JiraSettings (props) {
             >
               <Button
                 disabled={isSaving || fieldsList.length === 0}
-                fill={true}
+                fill
                 style={{ justifyContent: 'space-between', display: 'flex', minWidth: '260px', maxWidth: '300px' }}
                 text={jiraIssueEpicKeyField ? `${jiraIssueEpicKeyField.title}` : '< None Specified >'}
                 rightIcon='double-caret-vertical'
@@ -480,8 +480,8 @@ export default function JiraSettings (props) {
             <Select
               disabled={isSaving || fieldsList.length === 0}
               className='select-story-key'
-              inline={true}
-              fill={true}
+              inline
+              fill
               items={fieldsList}
               activeItem={jiraIssueStoryPointField}
               itemPredicate={(query, item) => item?.title.toLowerCase().indexOf(query.toLowerCase()) >= 0}
@@ -507,7 +507,7 @@ export default function JiraSettings (props) {
                   }}
                 />
               )}
-              noResults={<MenuItem disabled={true} text='No epic results.' />}
+              noResults={<MenuItem disabled text='No epic results.' />}
               onItemSelect={(item) => {
                 setJiraIssueStoryPointField(item)
               }}
@@ -518,7 +518,7 @@ export default function JiraSettings (props) {
               <Button
                 // loading={isFetchingJIRA}
                 disabled={isSaving || fieldsList.length === 0}
-                fill={true}
+                fill
                 style={{ justifyContent: 'space-between', display: 'flex', minWidth: '260px', maxWidth: '300px' }}
                 text={jiraIssueStoryPointField ? `${jiraIssueStoryPointField.title}` : '< None Specified >'}
                 rightIcon='double-caret-vertical'

@@ -8,7 +8,7 @@ const MappingTag = ({ classNames, labelIntent, labelName, onChange, rightElement
         <FormGroup
             // disabled={isTesting || isSaving}
           label=''
-          inline={true}
+          inline
           labelFor='jira-issue-type-mapping'
           helperText={helperText}
           className='formGroup'
@@ -22,10 +22,10 @@ const MappingTag = ({ classNames, labelIntent, labelName, onChange, rightElement
           <TagInput
             placeholder={placeholderText}
             values={values || []}
-            fill={true}
+            fill
             onChange={value => setTimeout(() => onChange([...new Set(value)]), 0)}
-            addOnPaste={true}
-            addOnBlur={true}
+            addOnPaste
+            addOnBlur
             rightElement={rightElement}
             onKeyDown={e => e.key === 'Enter' && e.preventDefault()}
             className='tagInput'

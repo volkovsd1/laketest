@@ -41,7 +41,7 @@ const StageTaskName = (props) => {
         position={Position.RIGHT}
         autoFocus={false}
         enforceFocus={false}
-        usePortal={true}
+        usePortal
       >
         <span className='task-plugin-text' ref={popoverTriggerRef}>{task.plugin}</span>
         <>

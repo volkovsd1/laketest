@@ -367,7 +367,7 @@ const PipelineActivity = (props) => {
                                 position={Position.BOTTOM}
                                 autoFocus={false}
                                 enforceFocus={false}
-                                usePortal={true}
+                                usePortal
                                 disabled={activePipeline.status !== 'TASK_RUNNING'}
                               >
                                 <Button

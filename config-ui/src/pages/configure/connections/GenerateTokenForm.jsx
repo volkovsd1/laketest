@@ -46,7 +46,7 @@ export default function GenerateTokenForm (props) {
         <FormGroup
           label=''
           disabled={isTesting || isSaving || isLocked}
-          inline={true}
+          inline
           labelFor='token-username'
           className='formGroup'
           contentClassName='formGroupContent'
@@ -69,7 +69,7 @@ export default function GenerateTokenForm (props) {
         <FormGroup
           disabled={isTesting || isSaving || isLocked}
           label=''
-          inline={true}
+          inline
           labelFor='token-password'
           className='formGroup'
           contentClassName='formGroupContent'
