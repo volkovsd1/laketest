@@ -32,9 +32,7 @@ func RandString(n int) string {
 func getSign(query url.Values, appId, secretKey, nonceStr, timestamp string) string {
 	// clone query because we need to add items
 	kvs := make([]string, 0, len(query)+3)
-	kvs = append(kvs, fmt.Sprintf("app_id=%s", appId))
-	kvs = append(kvs, fmt.Sprintf("timestamp=%s", timestamp))
-	kvs = append(kvs, fmt.Sprintf("nonce_str=%s", nonceStr))
+	kvs = append(kvs, fmt.Sprintf("app_id=%s", appId), fmt.Sprintf("timestamp=%s", timestamp), fmt.Sprintf("nonce_str=%s", nonceStr))
 	for key, values := range query {
 		for _, value := range values {
 			kvs = append(kvs, fmt.Sprintf("%s=%s", url.QueryEscape(key), url.QueryEscape(value)))

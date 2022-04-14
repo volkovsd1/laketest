@@ -47,8 +47,7 @@ func ExtractApiMergeRequestsCommits(taskCtx core.SubTaskContext) error {
 			// need to extract 2 kinds of entities here
 			results := make([]interface{}, 0, 2)
 
-			results = append(results, gitlabCommit)
-			results = append(results, gitlabMrCommit)
+			results = append(results, gitlabCommit, gitlabMrCommit)
 
 			return results, nil
 		},

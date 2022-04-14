@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"encoding/json"
+
 	"github.com/merico-dev/lake/plugins/core"
 	"github.com/merico-dev/lake/plugins/github/models"
 	"github.com/merico-dev/lake/plugins/helper"
@@ -93,8 +94,7 @@ func ExtractApiCommits(taskCtx core.SubTaskContext) error {
 				CommitSha: commit.Sha,
 			}
 
-			results = append(results, githubCommit)
-			results = append(results, githubRepoCommit)
+			results = append(results, githubCommit, githubRepoCommit)
 			return results, nil
 		},
 	})
