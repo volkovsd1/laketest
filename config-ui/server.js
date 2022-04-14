@@ -9,4 +9,4 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
-app.listen(SERVER_PORT, () => console.log(`lake / config-ui => listening on port : ${SERVER_PORT}`))
+app.listen(SERVER_PORT, () => {})

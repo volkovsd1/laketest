@@ -331,7 +331,7 @@ const CreatePipeline = (props) => {
   }, [pipelineName])
 
   useEffect(() => {
-    console.log('>> PIPELINE RUN TASK SETTINGS FOR PIPELINE MANAGER ....', runTasks)
+    
     setPipelineSettings({
       name: pipelineName,
       tasks: advancedMode ? runTasksAdvanced : [[...runTasks]]
@@ -345,10 +345,10 @@ const CreatePipeline = (props) => {
   }, [advancedMode, runTasks, runTasksAdvanced, pipelineName, setPipelineSettings, validate, validateAdvanced])
 
   useEffect(() => {
-    console.log('>> ENBALED PROVIDERS = ', enabledProviders)
+    
     const PipelineTasks = enabledProviders.map(p => configureProvider(p))
     setRunTasks(PipelineTasks.flat())
-    console.log('>> CONFIGURED PIPELINE TASKS = ', PipelineTasks)
+    
     validate()
     if (enabledProviders.includes(Providers.JIRA)) {
       fetchAllConnections(false)
@@ -368,36 +368,36 @@ const CreatePipeline = (props) => {
   ])
 
   useEffect(() => {
-    console.log('>> PIPELINE LAST RUN OBJECT CHANGED!!...', pipelineRun)
+    
     if (pipelineRun.ID && autoRedirect) {
       history.push(`/pipelines/activity/${pipelineRun.ID}`)
     }
   }, [pipelineRun, autoRedirect, history])
 
   useEffect(() => {
-    console.log(namePrefix, nameSuffix)
+    
     setPipelineName(`${namePrefix} ${nameSuffix}`)
     setToday(new Date())
   }, [namePrefix, nameSuffix])
 
   useEffect(() => {
-    console.log('>> JIRA SOURCE ID SELECTED, CONNECTION INSTANCE = ', selectedSource)
+    
     setSourceId(sId => selectedSource ? selectedSource.value : null)
     validate()
   }, [selectedSource, validate])
 
   useEffect(() => {
-    console.log('>> FETCHED ALL JIRA CONNECTIONS... ', allConnections)
+    
     setSources(allConnections.map(c => { return { id: c.ID, title: c.name || 'Instance', value: c.ID } }))
   }, [allConnections])
 
   useEffect(() => {
-    console.log('>> BUILT JIRA INSTANCE SELECT MENU... ', sources)
+    
   }, [sources])
 
   useEffect(() => {
     if (location.state?.existingTasks) {
-      console.log('>> RESTART ATTEMPT: DETECTED EXISTING PIPELINE CONFIGURATION... ', location.state.existingTasks)
+      
       const tasks = location.state.existingTasks
       setRestartDetected(true)
       setExistingTasks(tasks)
@@ -482,7 +482,7 @@ const CreatePipeline = (props) => {
   }, [existingTasks, buildPipelineStages])
 
   useEffect(() => {
-    console.log('>>> ADVANCED MODE ENABLED?: ', advancedMode)
+    
   }, [advancedMode])
 
   return (

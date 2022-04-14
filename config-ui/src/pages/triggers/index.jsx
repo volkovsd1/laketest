@@ -62,7 +62,7 @@ export default function Triggers () {
           }
           newTasks[newTask.pipelineRow - 1][newTask.pipelineCol - 1] = newTask
         }
-        console.log(newTasks)
+        
         setTasks(newTasks)
       } finally { }
     }, 3000)
@@ -70,7 +70,7 @@ export default function Triggers () {
   }, [pipeline])
 
   useEffect(() => {
-    console.log('Setting JSON based on active plugins...')
+    
     const setTriggerJsonBasedOnActivePlugins = async () => {
       const pluginsToSet = await SourcesUtil.getPluginSources()
       const collectionJson = TriggersUtil.getCollectionJson(pluginsToSet)
@@ -80,7 +80,7 @@ export default function Triggers () {
   }, [])
 
   useEffect(() => {
-    console.log('Setting text area based on updated triggers JSON...')
+    
     setTextAreaBody(JSON.stringify(triggerJson, null, 2))
   }, [triggerJson])
 
@@ -97,7 +97,7 @@ export default function Triggers () {
         })
       )
       setPipeline(res.data)
-      console.log('waiting following pipeline to complete: ', pipeline)
+      
     } catch (e) {
       console.error(e)
     }

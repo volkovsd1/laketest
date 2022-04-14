@@ -79,7 +79,7 @@ export default function EditConnection () {
   }, [activeConnection, activeProvider.id])
 
   useEffect(() => {
-    console.log('>>>> DETECTED PROVIDER = ', providerId)
+    
     setActiveProvider(integrations.find(p => p.id === providerId))
   }, [])
 
