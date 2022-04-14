@@ -73,7 +73,7 @@ export default function GitlabSettings (props) {
       JIRA_BOARD_GITLAB_PROJECTS: jiraBoardGitlabProjects
     }
     onSettingsChange(settings)
-    console.log('>> GITLAB INSTANCE SETTINGS FIELDS CHANGED!', settings)
+    
   }, [
     jiraBoardGitlabProjects,
     onSettingsChange
@@ -97,7 +97,7 @@ export default function GitlabSettings (props) {
   const deleteBoardMapping = (boardMap) => {
     const newBoards = boardMappings.filter(board => board.id !== boardMap.id)
     setBoardMappings(newBoards)
-    console.log('>>> EDIT BOARD MAPPINGS', newBoards)
+    
   }
 
   const linkProject = () => {
@@ -114,7 +114,7 @@ export default function GitlabSettings (props) {
     } else {
       ToastNotification.show({ message: 'Gitlab Project Link already ', intent: 'danger', icon: 'error' })
     }
-    console.log('>> LINKING JIRA BOARD', selectedBoard, ' TO GITLAB PROJECT ', selectedProject)
+    
   }
 
   const cancel = () => {
@@ -128,10 +128,10 @@ export default function GitlabSettings (props) {
     // @todo FETCH PROJECTS FROM BE API
     // setProjects([])
     if (connection && connection.ID) {
-      console.log('>> GITLAB CONNECTION OBJECT RECEIVED...', connection, connection.JIRA_BOARD_GITLAB_PROJECTS)
+      
       setJiraBoardGitlabProjects(connection.JIRA_BOARD_GITLAB_PROJECTS)
     } else {
-      console.log('>>>> WARNING!! NO CONNECTION OBJECT', connection)
+      
     }
   }, [connection])
 

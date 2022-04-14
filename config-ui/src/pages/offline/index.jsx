@@ -32,7 +32,7 @@ const Offline = (props) => {
   const [aborted, setAborted] = useState(false)
 
   const testEndpoint = useCallback(async () => {
-    console.log('>> OFFLINE MODE -  TESTING ENDPOINT!', apiEndpointUrl)
+    
     retryCount.current++
     try {
       setCardReady(false)
@@ -46,7 +46,7 @@ const Offline = (props) => {
   }, [apiEndpointUrl])
 
   useEffect(() => {
-    console.log('>> OFFLINE MODE -  ENDPOINT TEST RESPONSE = ', testResponse)
+    
     if (testResponse?.error) {
       ToastNotification.clear()
       ToastNotification.show({ message: testResponse.error ?? 'Network Error 504 (Gateway Timeout)', intent: 'danger', icon: 'error' })
@@ -57,18 +57,18 @@ const Offline = (props) => {
   }, [testResponse])
 
   useEffect(() => {
-    console.log('>> OFFLINE MODE - CURRENT API HTTP/STATUS: ', testStatus)
+    
     setIsOffline(testStatus !== 200)
     if (testStatus === 200) {
       clearInterval(testInterval.current)
       ToastNotification.clear()
       ToastNotification.show({ message: 'DevLake API Online', intent: 'danger', icon: 'tick-circle' })
-      console.log('>> OFFLINE MODE - API RESTORED, TERMINATING POLLING!!!')
+      
     }
   }, [testStatus])
 
   useEffect(() => {
-    console.log('>> OFFLINE MODE -  OFFLINE CHECK?', isOffline)
+    
   }, [isOffline])
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Offline = (props) => {
   }, [pollTimer, testEndpoint])
 
   useEffect(() => {
-    console.log('>> OFFLINE MODE (MOUNTED) - ENDPOINT URL ...', endpointUrl)
+    
     retryCount.current = 1
     setAborted(false)
     setApiEndpointUrl((url) => endpointUrl !== null && endpointUrl !== url ? endpointUrl : `${DEVLAKE_ENDPOINT}/ping`)
@@ -98,7 +98,7 @@ const Offline = (props) => {
 
   useEffect(() => {
     if (retryCount.current >= retryLimit) {
-      console.log('>> OFFLINE MODE - RETRY LIMIT EXCEEDED, TERMINATING POLLING!!!')
+      
       clearInterval(testInterval.current)
       setAborted(true)
       ToastNotification.clear()

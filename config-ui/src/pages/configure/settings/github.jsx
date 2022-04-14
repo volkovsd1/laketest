@@ -64,7 +64,7 @@ export default function GithubSettings (props) {
       GITHUB_ISSUE_TYPE_BUG: issueTypeBug,
       GITHUB_ISSUE_TYPE_INCIDENT: issueTypeIncident,
     }
-    console.log('>> GITHUB INSTANCE SETTINGS FIELDS CHANGED!', settings)
+    
     onSettingsChange(settings)
   }, [
     prType,

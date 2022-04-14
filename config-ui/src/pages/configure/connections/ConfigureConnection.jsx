@@ -116,7 +116,7 @@ export default function ConfigureConnection () {
   }
 
   const renderProviderSettings = useCallback((providerId, activeProvider) => {
-    console.log('>>> RENDERING PROVIDER SETTINGS...')
+    
     let settingsComponent = null
     if (activeProvider && activeProvider.settings) {
       settingsComponent = activeProvider.settings({
@@ -128,18 +128,18 @@ export default function ConfigureConnection () {
       })
     } else {
       // @todo create & display "fallback/empty settings" view
-      console.log('>> WARNING: NO PROVIDER SETTINGS RENDERED, PROVIDER = ', activeProvider)
+      
     }
     return settingsComponent
   }, [activeConnection, isSaving, isSavingConnection])
 
   useEffect(() => {
-    console.log('>>>> DETECTED PROVIDER ID = ', providerId)
-    console.log('>>>> DETECTED CONNECTION ID = ', connectionId)
+    
+    
     if (connectionId && providerId) {
       setActiveProvider(integrations.find(p => p.id === providerId))
     } else {
-      console.log('NO PARAMS!')
+      
     }
   }, [connectionId, providerId, integrations])
 
@@ -153,7 +153,7 @@ export default function ConfigureConnection () {
 
   useEffect(() => {
     if (deleteComplete) {
-      console.log('>>> DELETE COMPLETE!')
+      
       history.replace(`/integrations/${deleteComplete.provider?.id}`)
     }
   }, [deleteComplete, history])

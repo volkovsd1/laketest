@@ -25,7 +25,7 @@ export default function GenerateTokenForm (props) {
     const token = Buffer.from(`${username}:${password}`).toString('base64')
     onTokenChange(token)
     setNewToken(token)
-    console.log('>> BASIC AUTH TOKEN ENCODED = ', token)
+    
     setShowTokenCreator(false)
   }
 

@@ -98,7 +98,7 @@ export default function ConnectionForm (props) {
 
   useEffect(() => {
     if (!allowedAuthTypes.includes(authType)) {
-      console.log('INVALID AUTH TYPE!')
+      
     }
   }, [authType, allowedAuthTypes])
 
@@ -111,7 +111,7 @@ export default function ConnectionForm (props) {
   }, [name, endpointUrl, token, username, password, validate])
 
   useEffect(() => {
-    console.log('>> CONNECTION FORM VALIDATION STATUS CHANGED...', isValid)
+    
   }, [isValid])
 
   return (

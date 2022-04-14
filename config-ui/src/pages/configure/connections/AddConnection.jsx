@@ -110,7 +110,7 @@ export default function AddConnection () {
   }, [activeProvider.id])
 
   useEffect(() => {
-    console.log('>>>> DETECTED PROVIDER = ', providerId)
+    
     setActiveProvider(integrations.find(p => p.id === providerId))
   }, [])
 

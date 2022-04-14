@@ -54,7 +54,7 @@ const StageLane = (props) => {
     const remaining = stageTasks.filter(s => s.status !== 'TASK_COMPLETED')
     const minProgressValue = 0.05
     let progress = completed.length / (remaining.length + completed.length)
-    console.log('>>> STAGE LANE PROGRESS  = ', completed, remaining, completed.length / remaining.length)
+    
     if (stageTasks.length === 1) {
       progress = Math.max(minProgressValue, stageTasks[0].progress)
     }
@@ -91,7 +91,7 @@ const StageLane = (props) => {
 
   useEffect(() => {
     setActiveStage(stages[sK])
-    console.log('>> ACTIVE STAGE LANE', stages[sK])
+    
   }, [stages, sK])
 
   useEffect(() => {

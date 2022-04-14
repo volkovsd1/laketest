@@ -32,7 +32,7 @@ export default function Integration () {
 
   useEffect(() => {
     // Selected Provider
-    console.log(activeProvider)
+    
   }, [activeProvider, history])
 
   useEffect(() => {

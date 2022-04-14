@@ -44,7 +44,7 @@ function usePipelineValidation ({
 
   const validate = useCallback(() => {
     const errs = []
-    console.log('>> VALIDATING PIPELINE RUN ', pipelineName)
+    
 
     if (!pipelineName || pipelineName.length <= 2) {
       errs.push('Name: Enter a valid Pipeline Name')
@@ -138,7 +138,7 @@ function usePipelineValidation ({
     const errs = []
     let parsed = []
     if (advancedMode) {
-      console.log('>> VALIDATING ADVANCED PIPELINE RUN ', tasksAdvanced, pipelineName)
+      
 
       if (Array.isArray(tasksAdvanced)) {
         setDetectedProviders([...new Set(tasksAdvanced?.flat().filter(aT => allowedProviders.includes(aT.Plugin || aT.plugin)).map(p => p.Plugin || p.plugin))])
@@ -166,7 +166,7 @@ function usePipelineValidation ({
         errs.push('Advanced Pipeline: Unsupported Data Provider Plugin Detected!')
       }
 
-      console.log('>>> Advanced Pipeline Validation Errors? ...', errs)
+      
     }
     setErrors(errs)
   }, [
@@ -177,7 +177,7 @@ function usePipelineValidation ({
   ])
 
   useEffect(() => {
-    console.log('>>> PIPELINE RUN FORM ERRORS...', errors)
+    
     setIsValid(errors.length === 0)
     if (errors.length > 0) {
       // ToastNotification.clear()
@@ -185,7 +185,7 @@ function usePipelineValidation ({
   }, [errors])
 
   useEffect(() => {
-    console.log('>>> DETECTED PLUGIN PROVIDERS...', detectedProviders)
+    
   }, [detectedProviders])
 
   return {
