@@ -169,7 +169,7 @@ export default function ConnectionForm (props) {
             disabled={isTesting || isSaving || isLocked}
             readOnly={[Providers.GITHUB, Providers.GITLAB, Providers.JENKINS].includes(activeProvider.id)}
             label=''
-            inline={true}
+            inline
             labelFor='connection-name'
             className='formGroup-inline'
             contentClassName='formGroupContent'
@@ -191,7 +191,7 @@ export default function ConnectionForm (props) {
               onChange={(e) => onNameChange(e.target.value)}
               className={`input connection-name-input ${fieldHasError('Connection Source') ? 'invalid-field' : ''}`}
               leftIcon={[Providers.GITHUB, Providers.GITLAB, Providers.JENKINS].includes(activeProvider.id) ? 'lock' : null}
-              inline={true}
+              inline
               rightElement={(
                 <InputValidationError
                   error={getFieldError('Connection Source')}
@@ -206,7 +206,7 @@ export default function ConnectionForm (props) {
           <FormGroup
             disabled={isTesting || isSaving || isLocked}
             label=''
-            inline={true}
+            inline
             labelFor='connection-endpoint'
             className='formGroup'
             contentClassName='formGroupContent'
@@ -242,7 +242,7 @@ export default function ConnectionForm (props) {
             <FormGroup
               disabled={isTesting || isSaving || isLocked}
               label=''
-              inline={true}
+              inline
               labelFor='connection-token'
               className='formGroup'
               contentClassName='formGroupContent'
@@ -315,7 +315,7 @@ export default function ConnectionForm (props) {
               <FormGroup
                 label=''
                 disabled={isTesting || isSaving || isLocked}
-                inline={true}
+                inline
                 labelFor='connection-username'
                 className='formGroup'
                 contentClassName='formGroupContent'
@@ -348,7 +348,7 @@ export default function ConnectionForm (props) {
               <FormGroup
                 disabled={isTesting || isSaving || isLocked}
                 label=''
-                inline={true}
+                inline
                 labelFor='connection-password'
                 className='formGroup'
                 contentClassName='formGroupContent'
@@ -384,7 +384,7 @@ export default function ConnectionForm (props) {
           <div className='formContainer'>
             <FormGroup
               disabled={isTesting || isSaving || isLocked}
-              inline={true}
+              inline
               labelFor='connection-proxy'
               className='formGroup'
               contentClassName='formGroupContent'

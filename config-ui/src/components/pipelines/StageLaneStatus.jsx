@@ -76,7 +76,7 @@ const StageLaneStatus = (props) => {
       {isStageActive(sK) && (
         <ProgressBar
           className='stage-lane-progressbar'
-          stripes={true}
+          stripes
           intent={Intent.SUCCESS} value={calculateStageLaneProgress(stage)} style={{ borderRadius: 0 }}
         />
       )}

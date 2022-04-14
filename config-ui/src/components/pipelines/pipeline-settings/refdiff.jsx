@@ -160,7 +160,7 @@ const RefDiffSettings = (props) => {
                   >New Ref
                   </Tag>
               )}
-                inline={true}
+                inline
                 disabled={isRunning || !isEnabled(providerId)}
                 placeholder='eg. refs/tags/v0.6.0'
                 value={refDiffNewTag}
@@ -180,7 +180,7 @@ const RefDiffSettings = (props) => {
                   >Old Ref
                   </Tag>
               )}
-                inline={true}
+                inline
                 disabled={isRunning || !isEnabled(providerId)}
                 placeholder='eg. refs/tags/v0.5.0'
                 value={refDiffOldTag}

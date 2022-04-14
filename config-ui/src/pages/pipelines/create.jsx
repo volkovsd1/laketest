@@ -606,7 +606,7 @@ const CreatePipeline = (props) => {
                           className='popover-pipeline-menu-trigger'
                           popoverClassName='popover-pipeline-menu'
                           position={Position.RIGHT_BOTTOM}
-                          usePortal={true}
+                          usePortal
                         >
                           <Button text={`${today.toLocaleTimeString()}`} />
                           <>
@@ -691,7 +691,7 @@ const CreatePipeline = (props) => {
                         </h3>
                         <TextArea
                           growVertically={false}
-                          fill={true}
+                          fill
                           className='codeArea'
                           style={{ height: '440px !important', maxWidth: '640px' }}
                           value={rawConfiguration}
@@ -743,7 +743,7 @@ const CreatePipeline = (props) => {
                               className='popover-options-menu-trigger'
                               popoverClassName='popover-options-menu'
                               position={Position.TOP}
-                              usePortal={true}
+                              usePortal
                             >
                               <Button
                                 disabled={isRunning}
@@ -966,7 +966,7 @@ const CreatePipeline = (props) => {
                                 position={Position.RIGHT}
                                 autoFocus={false}
                                 enforceFocus={false}
-                                usePortal={true}
+                                usePortal
                               >
                                 <Button className='pipeline-action-btn' minimal><Icon icon='help' color={Colors.GRAY4} size={16} /></Button>
                                 <>

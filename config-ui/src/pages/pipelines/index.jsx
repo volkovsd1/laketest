@@ -486,7 +486,7 @@ const Pipelines = (props) => {
                                     position={Position.BOTTOM}
                                     autoFocus={false}
                                     enforceFocus={false}
-                                    usePortal={true}
+                                    usePortal
                                     disabled={pipeline.status !== 'TASK_RUNNING'}
                                   >
                                     <a

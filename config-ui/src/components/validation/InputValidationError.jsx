@@ -15,8 +15,8 @@ const InputValidationError = (props) => {
       <div className='inline-input-error' style={{ outline: 'none', cursor: 'pointer', margin: '5px 5px 3px 5px' }}>
         <Popover
           position={position}
-          usePortal={true}
-          openOnTargetFocus={true}
+          usePortal
+          openOnTargetFocus
           intent={Intent.WARNING}
           interactionKind={PopoverInteractionKind.HOVER_TARGET_ONLY}
         >
