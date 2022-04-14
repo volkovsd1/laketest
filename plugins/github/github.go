@@ -23,7 +23,7 @@ var _ core.Migratable = (*Github)(nil)
 
 type Github struct{}
 
-func (plugin Github) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin Github) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 

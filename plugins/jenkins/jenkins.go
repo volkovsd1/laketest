@@ -23,7 +23,7 @@ var _ core.Migratable = (*Jenkins)(nil)
 
 type Jenkins struct{}
 
-func (plugin Jenkins) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin Jenkins) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 

@@ -23,7 +23,7 @@ type GitlabInput struct {
 	Iid      int
 }
 
-func GetTotalPagesFromResponse(res *http.Response, args *helper.ApiCollectorArgs) (int, error) {
+func GetTotalPagesFromResponse(res *http.Response, _ *helper.ApiCollectorArgs) (int, error) {
 	total := res.Header.Get("X-Total-Pages")
 	if total == "" {
 		return 0, nil

@@ -227,7 +227,7 @@ func (collector *ApiCollector) generateUrl(pager *Pager, input interface{}) (str
 }
 
 // stepFetch collect pages synchronously. In practice, several stepFetch running concurrently, we could stop all of them by calling `cancel`.
-func (collector *ApiCollector) stepFetch(ctx context.Context, cancel func(), reqData RequestData) error {
+func (collector *ApiCollector) stepFetch(_ context.Context, cancel func(), reqData RequestData) error {
 	// channel `c` is used to make sure fetchAsync is called serially
 	c := make(chan struct{})
 	handler := func(res *http.Response, err error) error {

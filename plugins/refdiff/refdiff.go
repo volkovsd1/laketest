@@ -26,7 +26,7 @@ func (plugin RefDiff) Description() string {
 	return "Calculate commits diff for specified ref pairs based on `commits` and `commit_parents` tables"
 }
 
-func (plugin RefDiff) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin RefDiff) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 
@@ -38,7 +38,7 @@ func (plugin RefDiff) SubTaskMetas() []core.SubTaskMeta {
 	}
 }
 
-func (plugin RefDiff) PrepareTaskData(taskCtx core.TaskContext, options map[string]interface{}) (interface{}, error) {
+func (plugin RefDiff) PrepareTaskData(_ core.TaskContext, options map[string]interface{}) (interface{}, error) {
 	var op tasks.RefdiffOptions
 	err := mapstructure.Decode(options, &op)
 	if err != nil {

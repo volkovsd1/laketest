@@ -9,7 +9,7 @@ import (
 var db *gorm.DB
 var cfg *viper.Viper
 
-func Init(config *viper.Viper, logger core.Logger, database *gorm.DB) {
+func Init(config *viper.Viper, _ core.Logger, database *gorm.DB) {
 	db = database
 	cfg = config
 }

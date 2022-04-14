@@ -89,7 +89,7 @@ func (apiClient *ApiAsyncClient) DoAsync(
 	method string,
 	path string,
 	query url.Values,
-	body interface{},
+	_ interface{},
 	header http.Header,
 	handler ApiAsyncCallback,
 	retry int,

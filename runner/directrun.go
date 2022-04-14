@@ -17,7 +17,7 @@ func RunCmd(cmd *cobra.Command) {
 	}
 }
 
-func DirectRun(cmd *cobra.Command, args []string, pluginTask core.PluginTask, options map[string]interface{}) {
+func DirectRun(cmd *cobra.Command, _ []string, pluginTask core.PluginTask, options map[string]interface{}) {
 	tasks, err := cmd.Flags().GetStringSlice("tasks")
 	if err != nil {
 		panic(err)

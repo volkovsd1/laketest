@@ -94,7 +94,7 @@ func ExtractApiMergeRequests(taskCtx core.SubTaskContext) error {
 	return extractor.Execute()
 }
 
-func convertMergeRequest(mr *MergeRequestRes, projectId int) (*models.GitlabMergeRequest, error) {
+func convertMergeRequest(mr *MergeRequestRes, _ int) (*models.GitlabMergeRequest, error) {
 	gitlabMergeRequest := &models.GitlabMergeRequest{
 		GitlabId:         mr.GitlabId,
 		Iid:              mr.Iid,

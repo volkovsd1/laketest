@@ -23,7 +23,7 @@ func (plugin GitExtractor) SubTaskMetas() []core.SubTaskMeta {
 }
 
 // based on task context and user input options, return data that shared among all subtasks
-func (plugin GitExtractor) PrepareTaskData(taskCtx core.TaskContext, options map[string]interface{}) (interface{}, error) {
+func (plugin GitExtractor) PrepareTaskData(_ core.TaskContext, options map[string]interface{}) (interface{}, error) {
 	var op tasks.GitExtractorOptions
 	err := mapstructure.Decode(options, &op)
 	if err != nil {

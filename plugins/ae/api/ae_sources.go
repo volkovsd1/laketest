@@ -58,7 +58,7 @@ func PutSource(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
 /*
 GET /plugins/ae/sources
 */
-func ListSources(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
+func ListSources(_ *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
 	// RETURN ONLY 1 SOURCE (FROM ENV) until multi-source is developed.
 	aeSources, err := GetSourceFromEnv()
 	response := []AEResponse{*aeSources}
@@ -71,7 +71,7 @@ func ListSources(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) 
 /*
 GET /plugins/ae/sources/:sourceId
 */
-func GetSource(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
+func GetSource(_ *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
 	//  RETURN ONLY 1 SOURCE FROM ENV (Ignore ID until multi-source is developed.)
 	aeSources, err := GetSourceFromEnv()
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 
 type initSchemas struct{}
 
-func (*initSchemas) Up(ctx context.Context, db *gorm.DB) error {
+func (*initSchemas) Up(_ context.Context, db *gorm.DB) error {
 	return db.Migrator().AutoMigrate(
 		&archived.Task{},
 		&archived.Notification{},

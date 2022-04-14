@@ -9,7 +9,7 @@ import (
 
 type InitSchemas struct{}
 
-func (*InitSchemas) Up(ctx context.Context, db *gorm.DB) error {
+func (*InitSchemas) Up(_ context.Context, db *gorm.DB) error {
 	return db.Migrator().AutoMigrate(
 		&archived.JiraProject{},
 		&archived.JiraUser{},
