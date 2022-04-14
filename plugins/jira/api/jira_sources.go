@@ -218,7 +218,7 @@ func DeleteSource(input *core.ApiResourceInput) (*core.ApiResourceOutput, error)
 /*
 GET /plugins/jira/sources
 */
-func ListSources(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
+func ListSources(_ *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
 	jiraSources := make([]models.JiraSource, 0)
 	err := db.Find(&jiraSources).Error
 	if err != nil {

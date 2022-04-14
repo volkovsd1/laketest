@@ -20,7 +20,7 @@ import (
 )
 
 func RunTask(
-	cfg *viper.Viper,
+	_ *viper.Viper,
 	logger core.Logger,
 	db *gorm.DB,
 	ctx context.Context,

@@ -20,7 +20,7 @@ var _ core.Migratable = (*Feishu)(nil)
 
 type Feishu struct{}
 
-func (plugin Feishu) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin Feishu) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 

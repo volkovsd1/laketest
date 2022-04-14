@@ -23,7 +23,7 @@ var _ core.Migratable = (*AE)(nil)
 
 type AE struct{}
 
-func (plugin AE) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin AE) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 

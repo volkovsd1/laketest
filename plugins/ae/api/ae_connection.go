@@ -11,7 +11,7 @@ type ApiMeResponse struct {
 /*
 GET /plugins/ae/test
 */
-func TestConnection(input *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
+func TestConnection(_ *core.ApiResourceInput) (*core.ApiResourceOutput, error) {
 	// TODO: implement test connection
 	return &core.ApiResourceOutput{Body: true}, nil
 }

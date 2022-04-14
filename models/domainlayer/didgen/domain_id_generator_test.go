@@ -18,7 +18,7 @@ func (f *FooPlugin) Description() string {
 func (f *FooPlugin) Init() {
 }
 
-func (f *FooPlugin) Execute(options map[string]interface{}, progress chan<- float32, ctx context.Context) error {
+func (f *FooPlugin) Execute(_ map[string]interface{}, _ chan<- float32, _ context.Context) error {
 	return nil
 }
 

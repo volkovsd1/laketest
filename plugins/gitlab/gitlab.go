@@ -21,7 +21,7 @@ var _ core.Migratable = (*Gitlab)(nil)
 
 type Gitlab string
 
-func (plugin Gitlab) Init(config *viper.Viper, logger core.Logger, db *gorm.DB) error {
+func (plugin Gitlab) Init(_ *viper.Viper, _ core.Logger, _ *gorm.DB) error {
 	return nil
 }
 

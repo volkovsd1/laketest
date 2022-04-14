@@ -25,7 +25,7 @@ func (plugin Dbt) SubTaskMetas() []core.SubTaskMeta {
 	}
 }
 
-func (plugin Dbt) PrepareTaskData(taskCtx core.TaskContext, options map[string]interface{}) (interface{}, error) {
+func (plugin Dbt) PrepareTaskData(_ core.TaskContext, options map[string]interface{}) (interface{}, error) {
 	var op tasks.DbtOptions
 	err := mapstructure.Decode(options, &op)
 	if err != nil {
@@ -74,10 +74,10 @@ func main() {
 	projectVars["event_min_id"] = "7581"
 	projectVars["event_max_id"] = "7582"
 	dbtCmd.Flags().StringToStringVarP(&projectVars, "projectVars", "v", projectVars, "dbt provides variables to provide data to models for compilation.")
-	
+
 	dbtCmd.Run = func(cmd *cobra.Command, args []string) {
 		projectVarsConvert := make(map[string]interface{}, len(projectVars))
-		for k, v := range projectVars{
+		for k, v := range projectVars {
 			projectVarsConvert[k] = v
 		}
 		runner.DirectRun(cmd, args, PluginEntry, map[string]interface{}{
